@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeirani</title>
+    <style>
+        div, img{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .play-area{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 100px;
+            width: 450px;
+        }
+        .play-area div{
+            height: 255px;
+            width: 200px;
+            border: 5px solid blue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .play-area div img{
+            width: 100%;
+        }
+        .buttons, #result{
+            margin-top: 50px;
+            border: 5px solid magenta;
+        }
+        #result{
+            width: 211px;
+            height: 50px;
+            text-align: center;
+        }
+        p{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="play-area">
+        <div ><p>შენი არჩევანი</p><img id="your-choice" src="" alt=""></div>
+        <div ><p>კომპიუტერის არჩევანი</p><img id="computers-choice" src="" alt=""></div>
+    </div>
+    <div class="buttons">
+        <p>აირჩიე</p>
+        <button id="1">ჭა</button>
+        <button id="2">ფურცელი</button>
+        <button id="3">მაკრატელი</button>
+    </div>
+    <div id="result" width="200px" height="50px"></div>
+
+    <script>
+        const yourChoice = document.querySelector('#your-choice')
+        const computersChoice = document.querySelector('#computers-choice')
+        const chooseBtn = document.querySelectorAll('.buttons button')
+        const resultArea = document.querySelector('#result')
+        // გამოვიყენო 
+        const names = ['well.jpg', 'paper.jpg', 'scissors.png']
+        const indexes = [0, 1, 2]
+
+        // console.log(names[indexes[0]])
+
+        chooseBtn.forEach(e=>{
+            e.addEventListener('click', function(){
+                if(e.innerHTML == 'ჭა'){
+                    yourChoice.src = 'well.jpg'
+                }
+                if(e.innerHTML == 'ფურცელი'){
+                    yourChoice.src = 'paper.jpg'
+                }
+                if(e.innerHTML == 'მაკრატელი'){
+                    yourChoice.src = 'scissors.png'
+                }
+                // console.log(e.id)
+                // console.log(names[indexes[(e.id)-1]])
+                generateComputerChoice()
+                getResult()
+                // console.log(yourChoice.src)
+            })
+        })
+        
+        let randomNumber
+        function generateComputerChoice(){
+            randomNumber = Math.floor(Math.random() * 3) + 1
+
+            if(randomNumber === 1){
+                computersChoice.src = 'well.jpg'
+            }
+            if(randomNumber === 2 ){
+                computersChoice.src = 'paper.jpg'
+            }
+            if(randomNumber === 3){
+                computersChoice.src = 'scissors.png'
+            }
+            // console.log(randomNumber)
+        }
+    
+        // შევცვალო 
+        // ლოგიკა: თუ რენდომ ნამბერ უდრის შეჩეული სურათის ინერტექსტის ნეიმების ე-ს და უდრის ინდექსების შესაბამის რიცხვს, მაშინ მოხდეს ესენი:
+
+
+        function getResult(){
+            if (yourChoice.src == computersChoice.src) {
+                resultArea.innerText = 'ყაიმია!'
+            }
+            if (yourChoice.src.includes('well') && computersChoice.src.includes('scissors')){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if (yourChoice.src.includes('well')&& computersChoice.src.includes('paper')){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+            if (yourChoice.src.includes('scissors') && computersChoice.src.includes('well')){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+            if (yourChoice.src.includes('scissors') && computersChoice.src.includes('paper')){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if (yourChoice.src.includes('paper') && computersChoice.src.includes('well')){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if (yourChoice.src.includes('paper') && computersChoice.src.includes('scissors')){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+        }
+
+/* 
+        function getResult(){
+            if(yourChoice.src == computersChoice.src){
+                resultArea.innerText = 'ყაიმია!'
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/well.jpg' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/scissors.png'){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/well.jpg' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/paper.jpg'){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/scissors.png' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/well.jpg'){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/scissors.png' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/paper.jpg'){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/paper.jpg' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/well.jpg'){
+                resultArea.innerText = 'შენ მოიგე!'
+            }
+            if(yourChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/paper.jpg' && computersChoice.src === 'file:///D:/%E1%83%95%E1%83%94%E1%83%91%E1%83%A2%E1%83%94%E1%83%A5%E1%83%9C%E1%83%9D%E1%83%9A%E1%83%9D%E1%83%92%E1%83%98%E1%83%94%E1%83%91%E1%83%98/jeirani/scissors.png'){
+                resultArea.innerText = 'სამწუხაროდ, წააგე :('
+            }
+        } */
+    </script>
+</body>
+</html>
